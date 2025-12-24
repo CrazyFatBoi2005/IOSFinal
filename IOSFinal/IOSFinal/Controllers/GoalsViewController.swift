@@ -81,7 +81,12 @@ class GoalCell: UITableViewCell {
     
     func configure(with goal: Goal) {
         categoryLabel.text = goal.category?.name ?? "Категория"
-        let progress = Float(goal.currentAmount / goal.targetAmount)
+        let progress: Float
+        if goal.targetAmount > 0 {
+            progress = Float(goal.currentAmount / goal.targetAmount)
+        } else {
+            progress = 0
+        }
         progressView.setProgress(progress, animated: true)
         
         if progress > 1.0 {
