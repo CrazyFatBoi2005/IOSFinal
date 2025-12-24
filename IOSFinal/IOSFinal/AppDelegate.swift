@@ -9,8 +9,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("🔍 [DEBUG] AppDelegate: init() called")
     }
 
+    var window: UIWindow?
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print("🔍 [DEBUG] AppDelegate: didFinishLaunchingWithOptions started")
+        
+        // Fallback for devices/configurations not using SceneDelegate
+        if window == nil {
+            print("🔍 [DEBUG] AppDelegate: SceneDelegate not detected, setting up window manually")
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.backgroundColor = .systemBackground
+            window?.rootViewController = MainTabBarController()
+            window?.makeKeyAndVisible()
+        }
+        
         print("🔍 [DEBUG] AppDelegate: didFinishLaunchingWithOptions finished")
         return true
     }
