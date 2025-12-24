@@ -5,22 +5,9 @@ class AnalyticsViewController: UIViewController {
     private let segmentedControl = UISegmentedControl(items: ["Неделя", "Месяц", "Год"])
     private let historyLabel = UILabel()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-    }
-    
-    private func updateData() {
-        let transactions = PersistenceManager.shared.fetchTransactions(for: 0, year: 0)
-        let income = transactions.filter { $0.category?.type.lowercased() == "income" }.reduce(0) { $0 + $1.amount }
-        let expense = transactions.filter { $0.category?.type.lowercased() == "expense" }.reduce(0) { $0 + $1.amount }
-        
-        historyLabel.text = "Всего: Д+\(Int(income)) / Р-\(Int(expense)) ₸"
     }
     
     private func setupUI() {

@@ -7,13 +7,7 @@ class CoreDataStack {
     private init() {}
     
     lazy var persistentContainer: NSPersistentContainer = {
-        guard let modelURL = Bundle.main.url(forResource: "FinanceModel", withExtension: "momd") else {
-            fatalError("Error loading model from bundle")
-        }
-        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
-            fatalError("Error initializing mom from: \(modelURL)")
-        }
-        let container = NSPersistentContainer(name: "FinanceModel", managedObjectModel: model)
+        let container = NSPersistentContainer(name: "FinanceModel")
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")

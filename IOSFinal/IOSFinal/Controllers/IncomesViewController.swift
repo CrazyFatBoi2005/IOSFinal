@@ -42,7 +42,7 @@ class IncomesViewController: UIViewController {
     
     private func loadData() {
         let allTransactions = PersistenceManager.shared.fetchTransactions(for: 0, year: 0)
-        incomes = allTransactions.filter { $0.category?.type.lowercased() == "income" }
+        incomes = allTransactions.filter { $0.category?.type == "Income" }
         tableView.reloadData()
     }
     

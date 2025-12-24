@@ -55,7 +55,7 @@ class ExpensesViewController: UIViewController {
     
     private func loadData() {
         let allTransactions = PersistenceManager.shared.fetchTransactions(for: 0, year: 0)
-        expenses = allTransactions.filter { $0.category?.type.lowercased() == "expense" }
+        expenses = allTransactions.filter { $0.category?.type == "Expense" }
         tableView.reloadData()
     }
     
