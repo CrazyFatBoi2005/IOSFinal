@@ -23,25 +23,3 @@ class MainTabBarController: UITabBarController {
         return nav
     }
 }
-
-// MARK: - Base View Controllers (Placeholders)
-class DashboardViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-    }
-}
-
-class AnalyticsViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-    }
-}
-
-class GoalsViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-    }
-}
