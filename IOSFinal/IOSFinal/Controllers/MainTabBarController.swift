@@ -12,7 +12,7 @@ class MainTabBarController: UITabBarController {
         let analytics = createNav(with: "Аналитика", and: UIImage(systemName: "chart.pie"), vc: AnalyticsViewController())
         let goals = createNav(with: "Цели", and: UIImage(systemName: "target"), vc: GoalsViewController())
         
-        self.setViewControllers([dashboard, analytics, goals], animated: true)
+        self.setViewControllers([dashboard, analytics, goals], animated: false)
     }
     
     private func createNav(with title: String, and image: UIImage?, vc: UIViewController) -> UINavigationController {

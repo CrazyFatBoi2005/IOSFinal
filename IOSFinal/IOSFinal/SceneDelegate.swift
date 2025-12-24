@@ -8,8 +8,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = MainTabBarController()
         self.window = window
+        window.backgroundColor = .systemBackground
+        window.rootViewController = MainTabBarController()
         window.makeKeyAndVisible()
     }
 
