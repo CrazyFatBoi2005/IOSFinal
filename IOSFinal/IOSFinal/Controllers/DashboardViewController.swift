@@ -85,8 +85,8 @@ class DashboardViewController: UIViewController {
     }
     
     private func updateSummary() {
-        let totalIncome = transactions.filter { $0.category?.type == "Income" }.reduce(0) { $0 + $1.amount }
-        let totalExpense = transactions.filter { $0.category?.type == "Expense" }.reduce(0) { $0 + $1.amount }
+        let totalIncome = transactions.filter { $0.category?.type.lowercased() == "income" }.reduce(0) { $0 + $1.amount }
+        let totalExpense = transactions.filter { $0.category?.type.lowercased() == "expense" }.reduce(0) { $0 + $1.amount }
         let balance = totalIncome - totalExpense
         
         balanceLabel.text = "Баланс: \(Int(balance)) ₸"

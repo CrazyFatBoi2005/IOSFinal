@@ -7,7 +7,7 @@ class PersistenceManager {
     
     private init() {}
     func createCategory(name: String, iconName: String, hexColor: String, type: String) -> Category {
-        let category = Category(context: context)
+        let category = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
         category.id = UUID()
         category.name = name
         category.iconName = iconName
@@ -41,7 +41,7 @@ class PersistenceManager {
     }
     
     func createTransaction(amount: Double, date: Date, note: String?, category: Category) {
-        let transaction = Transaction(context: context)
+        let transaction = NSEntityDescription.insertNewObject(forEntityName: "Transaction", into: context) as! Transaction
         transaction.id = UUID()
         transaction.amount = amount
         transaction.date = date
