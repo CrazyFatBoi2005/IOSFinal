@@ -3,10 +3,8 @@ import UIKit
 class MainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
-        print("🔍 [DEBUG] MainTabBarController: viewDidLoad started")
         super.viewDidLoad()
         setupTabs()
-        print("🔍 [DEBUG] MainTabBarController: viewDidLoad finished")
     }
     
     private func setupTabs() {

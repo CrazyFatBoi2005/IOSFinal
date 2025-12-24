@@ -4,19 +4,14 @@ import Foundation
 class CoreDataStack {
     static let shared = CoreDataStack()
     
-    private init() {
-        print("🔍 [DEBUG] CoreDataStack: init() called")
-    }
+    private init() {}
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FinanceModel")
-        print("🔍 [DEBUG] CoreDataStack: Loading persistent stores...")
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
-                print("❌ [DEBUG] CoreDataStack: Critical Error loading persistent stores: \(error), \(error.userInfo)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
-            print("🔍 [DEBUG] CoreDataStack: Persistent stores loaded successfully: \(storeDescription)")
         }
         return container
     }()
