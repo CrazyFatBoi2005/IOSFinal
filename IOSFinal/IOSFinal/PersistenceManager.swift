@@ -5,6 +5,9 @@ class PersistenceManager {
     static let shared = PersistenceManager()
     private let context = CoreDataStack.shared.context
     
+    private init() {
+        print("🔍 [DEBUG] PersistenceManager: init() called")
+    }
     func createCategory(name: String, iconName: String, hexColor: String, type: String) -> Category {
         let category = Category(context: context)
         category.id = UUID()

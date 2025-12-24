@@ -4,7 +4,9 @@ import Foundation
 class CoreDataStack {
     static let shared = CoreDataStack()
     
-    private init() {}
+    private init() {
+        print("🔍 [DEBUG] CoreDataStack: init() called")
+    }
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FinanceModel")
