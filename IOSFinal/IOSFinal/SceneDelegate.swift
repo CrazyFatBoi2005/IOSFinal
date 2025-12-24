@@ -5,13 +5,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
+        print("🔍 [DEBUG] SceneDelegate: willConnectTo session starting")
+        guard let windowScene = (scene as? UIWindowScene) else { 
+            print("🔍 [DEBUG] SceneDelegate: Failed to get UIWindowScene")
+            return 
+        }
         
         let window = UIWindow(windowScene: windowScene)
         self.window = window
-        window.backgroundColor = .systemBackground
+        window.backgroundColor = .systemYellow // Яркий тестовый цвет
+        print("🔍 [DEBUG] SceneDelegate: Setting rootViewController to MainTabBarController")
         window.rootViewController = MainTabBarController()
+        print("🔍 [DEBUG] SceneDelegate: making window key and visible")
         window.makeKeyAndVisible()
+        print("🔍 [DEBUG] SceneDelegate: willConnectTo session finished. Window frame: \(window.frame)")
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}

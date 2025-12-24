@@ -12,9 +12,12 @@ class DashboardViewController: UIViewController {
     private var transactions: [Transaction] = []
     
     override func viewDidLoad() {
+        print("🔍 [DEBUG] DashboardViewController: viewDidLoad started")
         super.viewDidLoad()
+        view.backgroundColor = .systemOrange // Test color
         setupUI()
         loadData()
+        print("🔍 [DEBUG] DashboardViewController: viewDidLoad finished")
     }
     
     private func setupUI() {

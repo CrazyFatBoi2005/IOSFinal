@@ -7,12 +7,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        if window == nil {
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window?.backgroundColor = .systemBackground
-            window?.rootViewController = MainTabBarController()
-            window?.makeKeyAndVisible()
-        }
+        print("🔍 [DEBUG] AppDelegate: didFinishLaunchingWithOptions started")
+        print("🔍 [DEBUG] AppDelegate: didFinishLaunchingWithOptions finished")
         return true
     }
 
