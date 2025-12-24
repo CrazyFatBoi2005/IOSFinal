@@ -2,7 +2,6 @@ import Foundation
 import CoreData
 import UIKit
 
-@objc(Category)
 public class Category: NSManagedObject {
     @NSManaged public var id: UUID
     @NSManaged public var name: String

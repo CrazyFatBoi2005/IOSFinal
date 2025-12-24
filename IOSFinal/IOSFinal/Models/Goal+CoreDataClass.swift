@@ -1,7 +1,6 @@
 import Foundation
 import CoreData
 
-@objc(Goal)
 public class Goal: NSManagedObject {
     @NSManaged public var id: UUID
     @NSManaged public var targetAmount: Double

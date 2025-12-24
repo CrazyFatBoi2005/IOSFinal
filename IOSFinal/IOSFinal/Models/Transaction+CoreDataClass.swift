@@ -1,7 +1,6 @@
 import Foundation
 import CoreData
 
-@objc(Transaction)
 public class Transaction: NSManagedObject {
     @NSManaged public var id: UUID
     @NSManaged public var amount: Double
