@@ -1,10 +1,7 @@
 import Foundation
-import CoreData
 
 class PersistenceManager {
     static let shared = PersistenceManager()
-    
-    private init() {}
     
     private var categories: [Category] = []
     private var transactions: [Transaction] = []
