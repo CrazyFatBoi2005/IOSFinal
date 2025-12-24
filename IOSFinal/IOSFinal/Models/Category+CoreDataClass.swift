@@ -10,6 +10,7 @@ public class Category: NSManagedObject {
     @NSManaged public var hexColor: String
     @NSManaged public var type: String
     @NSManaged public var transactions: NSSet?
+    @NSManaged public var goals: NSSet?
 }
 
 extension Category {
