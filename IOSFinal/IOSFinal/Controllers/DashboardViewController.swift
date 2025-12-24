@@ -14,12 +14,20 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        loadData()
+        
+        // Асинхронная загрузка данных, чтобы не блокировать Main Thread при запуске
+        DispatchQueue.main.async {
+            self.loadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+        
+        // Отложенная настройка кнопок решает проблему с AutoLayout Constraints в навигаторе
+        DispatchQueue.main.async {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd))
+        }
     }
     
     private func setupUI() {
