@@ -21,13 +21,10 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Отложенная настройка кнопок решает проблему с AutoLayout Constraints в навигаторе
-        DispatchQueue.main.async {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd))
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Настройка кнопки после появления экрана окончательно решает проблемы с констрейнтами в навигаторе
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd))
     }
     
     private func setupUI() {
