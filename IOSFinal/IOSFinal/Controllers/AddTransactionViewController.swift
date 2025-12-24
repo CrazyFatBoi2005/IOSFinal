@@ -57,9 +57,12 @@ class AddTransactionViewController: UIViewController {
     }
 }
 
-extension UIView {
-    func then(_ block: (UIView) -> Void) -> Self {
+protocol Then {}
+extension Then where Self: Any {
+    @discardableResult
+    func then(_ block: (Self) -> Void) -> Self {
         block(self)
         return self
     }
 }
+extension NSObject: Then {}
