@@ -8,11 +8,11 @@ class MainTabBarController: UITabBarController {
     }
     
     private func setupTabs() {
-        let dashboard = createNav(with: "Траты", and: UIImage(systemName: "house"), vc: DashboardViewController())
-        let analytics = createNav(with: "Аналитика", and: UIImage(systemName: "chart.pie"), vc: AnalyticsViewController())
-        let goals = createNav(with: "Цели", and: UIImage(systemName: "target"), vc: GoalsViewController())
+        let dashboard = createNav(with: "Дашборд", and: UIImage(systemName: "house"), vc: DashboardViewController())
+        let incomes = createNav(with: "Доходы", and: UIImage(systemName: "arrow.down.circle"), vc: IncomesViewController())
+        let expenses = createNav(with: "Расходы", and: UIImage(systemName: "arrow.up.circle"), vc: ExpensesViewController())
         
-        self.setViewControllers([dashboard, analytics, goals], animated: false)
+        self.setViewControllers([dashboard, incomes, expenses], animated: false)
     }
     
     private func createNav(with title: String, and image: UIImage?, vc: UIViewController) -> UINavigationController {

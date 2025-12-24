@@ -11,14 +11,14 @@ class DashboardViewController: UIViewController {
     
     private var transactions: [Transaction] = []
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        // Асинхронная загрузка данных, чтобы не блокировать Main Thread при запуске
-        DispatchQueue.main.async {
-            self.loadData()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,10 +79,19 @@ class DashboardViewController: UIViewController {
     }
     
     private func loadData() {
+        transactions = PersistenceManager.shared.fetchTransactions(for: 0, year: 0).sorted { $0.date ?? Date() > $1.date ?? Date() }
         updateSummary()
+        tableView.reloadData()
     }
     
     private func updateSummary() {
+        let totalIncome = transactions.filter { $0.category?.type == "Income" }.reduce(0) { $0 + $1.amount }
+        let totalExpense = transactions.filter { $0.category?.type == "Expense" }.reduce(0) { $0 + $1.amount }
+        let balance = totalIncome - totalExpense
+        
+        balanceLabel.text = "Баланс: \(Int(balance)) ₸"
+        incomeLabel.text = "Доход: \(Int(totalIncome)) ₸"
+        expenseLabel.text = "Расход: \(Int(totalExpense)) ₸"
     }
     
     @objc private func didTapAdd() {
