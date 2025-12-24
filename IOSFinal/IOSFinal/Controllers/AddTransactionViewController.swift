@@ -5,19 +5,6 @@ class AddTransactionViewController: UIViewController {
     private let amountField = UITextField()
     private let noteField = UITextField()
     private let categoryPicker = UIPickerView()
-    private let datePicker = UIDatePicker()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.didTapCancel))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self.didTapSave))
-    }
-    
     var transactionType: String = "Expense"
     private var categories: [Category] = []
     

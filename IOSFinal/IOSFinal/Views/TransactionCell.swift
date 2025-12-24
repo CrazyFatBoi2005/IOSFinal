@@ -56,7 +56,7 @@ class TransactionCell: UITableViewCell {
         formatter.dateStyle = .short
         dateLabel.text = formatter.string(from: transaction.date)
         
-        if transaction.category?.type?.lowercased() == "expense" {
+        if transaction.category?.type.lowercased() == "expense" {
             amountLabel.textColor = .systemRed
         } else {
             amountLabel.textColor = .systemGreen
