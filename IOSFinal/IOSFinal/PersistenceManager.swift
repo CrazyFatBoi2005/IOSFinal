@@ -22,7 +22,6 @@ class PersistenceManager {
         do {
             return try context.fetch(request)
         } catch {
-            print("Fetch error: \(error)")
             return []
         }
     }

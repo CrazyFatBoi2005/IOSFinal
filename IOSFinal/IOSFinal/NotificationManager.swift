@@ -9,7 +9,6 @@ class NotificationManager {
     func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
             if granted {
-                print("Notification permission granted")
                 self.scheduleDailyReminder()
             }
         }

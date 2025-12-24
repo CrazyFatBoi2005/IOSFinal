@@ -12,12 +12,14 @@ class DashboardViewController: UIViewController {
     private var transactions: [Transaction] = []
     
     override func viewDidLoad() {
-        print("🔍 [DEBUG] DashboardViewController: viewDidLoad started")
         super.viewDidLoad()
-        view.backgroundColor = .systemOrange // Test color
         setupUI()
         loadData()
-        print("🔍 [DEBUG] DashboardViewController: viewDidLoad finished")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
     }
     
     private func setupUI() {
@@ -43,8 +45,6 @@ class DashboardViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
     }
     
     private func setupHeader() {
