@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" dream_version="1.0" lastSavedVersionValue="1" versionNumber="1" userDefinedModelVersionIdentifier="" systemVersion="23E214">
-    <entity name="Category" managedObjectClassName="Category" module="IOSFinal" codeGenerationType="manual" syncable="YES">
+    <entity name="Category" managedObjectClassName="IOSFinal.Category" syncable="YES">
         <attribute name="hexColor" optional="NO" attributeType="String"/>
         <attribute name="iconName" optional="NO" attributeType="String"/>
         <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
@@ -9,7 +9,7 @@
         <relationship name="goals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="category" inverseEntity="Goal"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Transaction" inverseName="category" inverseEntity="Transaction"/>
     </entity>
-    <entity name="Goal" managedObjectClassName="Goal" module="IOSFinal" codeGenerationType="manual" syncable="YES">
+    <entity name="Goal" managedObjectClassName="IOSFinal.Goal" syncable="YES">
         <attribute name="currentAmount" optional="NO" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="month" optional="NO" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -17,7 +17,7 @@
         <attribute name="year" optional="NO" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="goals" inverseEntity="Category"/>
     </entity>
-    <entity name="Transaction" managedObjectClassName="Transaction" module="IOSFinal" codeGenerationType="manual" syncable="YES">
+    <entity name="Transaction" managedObjectClassName="IOSFinal.Transaction" syncable="YES">
         <attribute name="amount" optional="NO" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="date" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
