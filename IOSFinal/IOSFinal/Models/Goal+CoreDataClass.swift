@@ -1,13 +1,8 @@
+/*
 import Foundation
 import CoreData
 
 public class Goal: NSManagedObject {
-    @NSManaged public var id: UUID
-    @NSManaged public var targetAmount: Double
-    @NSManaged public var currentAmount: Double
-    @NSManaged public var category: Category?
-    @NSManaged public var month: Int16
-    @NSManaged public var year: Int16
 }
 
 extension Goal {
@@ -15,3 +10,4 @@ extension Goal {
         return NSFetchRequest<Goal>(entityName: "Goal")
     }
 }
+*/

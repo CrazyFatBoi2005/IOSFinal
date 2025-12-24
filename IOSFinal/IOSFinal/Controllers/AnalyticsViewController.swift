@@ -10,6 +10,36 @@ class AnalyticsViewController: UIViewController {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
+    }
+    
+    private func loadData() {
+        let transactions = PersistenceManager.shared.fetchTransactions(for: 0, year: 0)
+        let totalIncome = transactions.filter { $0.type.lowercased() == "income" }.reduce(0) { $0 + $1.amount }
+        let totalExpense = transactions.filter { $0.type.lowercased() == "expense" }.reduce(0) { $0 + $1.amount }
+        
+        // Поиск самой крупной категории расходов
+        let expenses = transactions.filter { $0.type.lowercased() == "expense" }
+        var categoryTotals: [String: Double] = [:]
+        for tx in expenses {
+            let catName = tx.category?.name ?? "Без категории"
+            categoryTotals[catName, default: 0] += tx.amount
+        }
+        
+        let topCategory = categoryTotals.max { $0.value < $1.value }
+        
+        if let top = topCategory {
+            label.text = "Топ расходов: \(top.key)\n\(Int(top.value)) ₸\n\nВсего доходов: \(Int(totalIncome)) ₸\nВсего расходов: \(Int(totalExpense)) ₸"
+        } else {
+            label.text = "Нет данных для анализа.\nДобавьте расходы на вкладке 'Расходы'."
+        }
+    }
+    
+    // UI elements needs to be accessible
+    private let label = UILabel()
+    
     private func setupUI() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -18,7 +48,7 @@ class AnalyticsViewController: UIViewController {
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(segmentedControl)
         
-        historyLabel.text = "Статистика за Декабрь"
+        historyLabel.text = "Статистика"
         historyLabel.font = .systemFont(ofSize: 18, weight: .medium)
         historyLabel.textAlignment = .center
         historyLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -30,11 +60,10 @@ class AnalyticsViewController: UIViewController {
         placeholderChart.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(placeholderChart)
         
-        let label = UILabel()
-        label.text = "Здесь будет график DGCharts\n(требуется установка пакета)"
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.textColor = .secondaryLabel
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         placeholderChart.addSubview(label)
         
@@ -49,10 +78,12 @@ class AnalyticsViewController: UIViewController {
             placeholderChart.topAnchor.constraint(equalTo: historyLabel.bottomAnchor, constant: 20),
             placeholderChart.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             placeholderChart.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            placeholderChart.heightAnchor.constraint(equalTo: placeholderChart.widthAnchor),
+            placeholderChart.heightAnchor.constraint(equalToConstant: 250),
             
             label.centerXAnchor.constraint(equalTo: placeholderChart.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: placeholderChart.centerYAnchor)
+            label.centerYAnchor.constraint(equalTo: placeholderChart.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: placeholderChart.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: placeholderChart.trailingAnchor, constant: -20)
         ])
     }
     

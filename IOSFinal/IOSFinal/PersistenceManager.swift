@@ -3,64 +3,48 @@ import CoreData
 
 class PersistenceManager {
     static let shared = PersistenceManager()
-    private let context = CoreDataStack.shared.context
     
     private init() {}
+    
+    private var categories: [Category] = []
+    private var transactions: [Transaction] = []
+    private var goals: [Goal] = []
+    
+    private init() {
+        // Добавим несколько категорий по умолчанию
+        categories = [
+            Category(name: "Еда", iconName: "fork.knife", hexColor: "#FF9500", type: "Expense"),
+            Category(name: "Транспорт", iconName: "car", hexColor: "#007AFF", type: "Expense"),
+            Category(name: "Зарплата", iconName: "dollarsign.circle", hexColor: "#34C759", type: "Income")
+        ]
+    }
+    
     func createCategory(name: String, iconName: String, hexColor: String, type: String) -> Category {
-        let category = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
-        category.id = UUID()
-        category.name = name
-        category.iconName = iconName
-        category.hexColor = hexColor
-        category.type = type
-        save()
+        let category = Category(name: name, iconName: iconName, hexColor: hexColor, type: type)
+        categories.append(category)
         return category
     }
     
     func fetchCategories() -> [Category] {
-        let request: NSFetchRequest<Category> = Category.fetchRequest()
-        do {
-            return try context.fetch(request)
-        } catch {
-            return []
-        }
-    }
-    
-    func fetchCategoriesSorted(by sortType: SortType) -> [Category] {
-        let categories = fetchCategories()
-        switch sortType {
-        case .transactionCount:
-            return categories.sorted { ($0.transactions?.count ?? 0) > ($1.transactions?.count ?? 0) }
-        case .totalAmount:
-            return categories.sorted { cat1, cat2 in
-                let total1 = (cat1.transactions?.allObjects as? [Transaction])?.reduce(0) { $0 + $1.amount } ?? 0
-                let total2 = (cat2.transactions?.allObjects as? [Transaction])?.reduce(0) { $0 + $1.amount } ?? 0
-                return total1 > total2
-            }
-        }
+        return categories
     }
     
     func createTransaction(amount: Double, date: Date, note: String?, category: Category?, type: String) {
-        let transaction = NSEntityDescription.insertNewObject(forEntityName: "Transaction", into: context) as! Transaction
-        transaction.id = UUID()
-        transaction.amount = amount
-        transaction.date = date
-        transaction.note = note
-        transaction.category = category
-        transaction.type = type
-        save()
+        let transaction = Transaction(amount: amount, date: date, note: note, type: type, category: category)
+        transactions.append(transaction)
     }
     
     func fetchTransactions(for month: Int, year: Int) -> [Transaction] {
-        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-        do {
-            return try context.fetch(request)
-        } catch {
-            return []
-        }
+        // Для простоты возвращаем все в этом тестовом приложении
+        return transactions.sorted { $0.date > $1.date }
     }
     
-    private func save() {
-        CoreDataStack.shared.saveContext()
+    func createGoal(targetAmount: Double, currentAmount: Double, month: Int16, year: Int16, category: Category?) {
+        let goal = Goal(targetAmount: targetAmount, currentAmount: currentAmount, month: month, year: year, category: category)
+        goals.append(goal)
+    }
+    
+    func fetchGoals() -> [Goal] {
+        return goals
     }
 }

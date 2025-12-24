@@ -1,3 +1,4 @@
+/*
 import CoreData
 import Foundation
 
@@ -32,3 +33,4 @@ class CoreDataStack {
         }
     }
 }
+*/

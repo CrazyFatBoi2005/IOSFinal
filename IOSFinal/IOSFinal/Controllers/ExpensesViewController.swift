@@ -1,5 +1,4 @@
 import UIKit
-import CoreData
 
 class ExpensesViewController: UIViewController {
     
