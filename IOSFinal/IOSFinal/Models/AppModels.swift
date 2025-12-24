@@ -1,6 +1,6 @@
 import Foundation
 
-class Category {
+class Category: Codable {
     var id: UUID
     var name: String
     var iconName: String
@@ -16,7 +16,7 @@ class Category {
     }
 }
 
-class Transaction {
+class Transaction: Codable {
     var id: UUID
     var amount: Double
     var date: Date
@@ -34,7 +34,7 @@ class Transaction {
     }
 }
 
-class Goal {
+class Goal: Codable {
     var id: UUID
     var targetAmount: Double
     var currentAmount: Double
