@@ -44,4 +44,10 @@ class PersistenceManager {
     func fetchGoals() -> [Goal] {
         return goals
     }
+    
+    func getExpensesForCategory(_ categoryName: String) -> Double {
+        return transactions
+            .filter { $0.type.lowercased() == "expense" && $0.category?.name == categoryName }
+            .reduce(0) { $0 + $1.amount }
+    }
 }

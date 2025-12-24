@@ -12,18 +12,13 @@ class DashboardViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Категории", style: .plain, target: self, action: #selector(self.didTapCategories))
         loadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Категории", style: .plain, target: self, action: #selector(self.didTapCategories))
     }
     
     @objc private func didTapCategories() {

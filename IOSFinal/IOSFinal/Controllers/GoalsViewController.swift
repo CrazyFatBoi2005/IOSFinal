@@ -36,6 +36,12 @@ class GoalsViewController: UIViewController {
     
     private func loadData() {
         goals = PersistenceManager.shared.fetchGoals()
+        // Принудительно обновляем текущие траты для каждой цели
+        for goal in goals {
+            if let cat = goal.category {
+                goal.currentAmount = PersistenceManager.shared.getExpensesForCategory(cat.name)
+            }
+        }
         tableView.reloadData()
     }
     
@@ -48,15 +54,25 @@ class GoalsViewController: UIViewController {
             return
         }
         
-        let alert = UIAlertController(title: "Новая цель", message: "Выберите категорию и введите сумму", preferredStyle: .alert)
-        alert.addTextField { $0.placeholder = "Целевая сумма" ; $0.keyboardType = .decimalPad }
+        let sheet = UIAlertController(title: "Выберите категорию", message: "К какой категории относится цель?", preferredStyle: .actionSheet)
         
-        // Для простоты в алерте выберем первую доступную категорию или предложим выбор в будущем
-        // В рамках этого тестового приложения просто создадим цель для первой категории расходов
+        for cat in categories {
+            sheet.addAction(UIAlertAction(title: cat.name, style: .default) { _ in
+                self.showAmountAlert(for: cat)
+            })
+        }
+        
+        sheet.addAction(UIAlertAction(title: "Отмена", style: .cancel))
+        present(sheet, animated: true)
+    }
+    
+    private func showAmountAlert(for category: Category) {
+        let alert = UIAlertController(title: "Цель: \(category.name)", message: "Введите лимит бюджета", preferredStyle: .alert)
+        alert.addTextField { $0.placeholder = "Максимальная сумма" ; $0.keyboardType = .decimalPad }
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
         alert.addAction(UIAlertAction(title: "Создать", style: .default) { _ in
             if let amountText = alert.textFields?.first?.text, let amount = Double(amountText) {
-                PersistenceManager.shared.createGoal(targetAmount: amount, currentAmount: 0, month: 12, year: 2025, category: categories.first)
+                PersistenceManager.shared.createGoal(targetAmount: amount, currentAmount: 0, month: 12, year: 2025, category: category)
                 self.loadData()
             }
         })
