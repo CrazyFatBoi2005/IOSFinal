@@ -3,6 +3,11 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    override init() {
+        super.init()
+        print("🔍 [DEBUG] AppDelegate: init() called")
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print("🔍 [DEBUG] AppDelegate: didFinishLaunchingWithOptions started")
@@ -10,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        print("🔍 [DEBUG] AppDelegate: configurationForConnecting called")
         let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
         return config
     }

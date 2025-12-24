@@ -3,6 +3,11 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    override init() {
+        super.init()
+        print("🔍 [DEBUG] SceneDelegate: init() called")
+    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         print("🔍 [DEBUG] SceneDelegate: willConnectTo session starting")
