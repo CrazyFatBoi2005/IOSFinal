@@ -31,18 +31,16 @@ class GoalsViewController: UIViewController {
     }
     
     @objc private func didTapAdd() {
-        // Form to add Goal (Limit for month)
     }
 }
 
 extension GoalsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return goals.count // For demo, assuming 0 for now
+        return goals.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: indexPath) as! GoalCell
-        // cell.configure(with: goals[indexPath.row])
         return cell
     }
 }

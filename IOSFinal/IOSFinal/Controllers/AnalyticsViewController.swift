@@ -1,9 +1,7 @@
 import UIKit
-// import DGCharts // Note: User needs to add this package
 
 class AnalyticsViewController: UIViewController {
     
-    // private let pieChartView = PieChartView()
     private let segmentedControl = UISegmentedControl(items: ["Неделя", "Месяц", "Год"])
     private let historyLabel = UILabel()
     
@@ -26,7 +24,6 @@ class AnalyticsViewController: UIViewController {
         historyLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(historyLabel)
         
-        // Placeholder for Chart
         let placeholderChart = UIView()
         placeholderChart.backgroundColor = .secondarySystemBackground
         placeholderChart.layer.cornerRadius = 12
@@ -59,9 +56,7 @@ class AnalyticsViewController: UIViewController {
         ])
     }
     
-    // Logic for sorting and filtering based on segment
     func updateAnalytics(sortType: SortType) {
-        // Fetch data and update chart
     }
 }
 

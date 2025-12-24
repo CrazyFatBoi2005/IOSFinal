@@ -21,10 +21,8 @@ class DashboardViewController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        // Header
         setupHeader()
         
-        // TableView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(TransactionCell.self, forCellReuseIdentifier: "TransactionCell")
@@ -73,13 +71,10 @@ class DashboardViewController: UIViewController {
     }
     
     private func loadData() {
-        // In real app, we'd fetch from PersistenceManager
-        // For now, empty or mock
         updateSummary()
     }
     
     private func updateSummary() {
-        // Logic to calculate totals
     }
     
     @objc private func didTapAdd() {

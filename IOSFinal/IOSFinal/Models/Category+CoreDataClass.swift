@@ -8,7 +8,7 @@ public class Category: NSManagedObject {
     @NSManaged public var name: String
     @NSManaged public var iconName: String
     @NSManaged public var hexColor: String
-    @NSManaged public var type: String // "expense" or "income"
+    @NSManaged public var type: String
     @NSManaged public var transactions: NSSet?
 }
 

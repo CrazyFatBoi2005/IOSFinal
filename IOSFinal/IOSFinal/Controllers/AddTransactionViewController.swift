@@ -19,7 +19,6 @@ class AddTransactionViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapSave))
         
-        // Simple form layout
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 20
@@ -54,12 +53,10 @@ class AddTransactionViewController: UIViewController {
     }
     
     @objc private func didTapSave() {
-        // Validation and creation logic
         dismiss(animated: true)
     }
 }
 
-// Helper for UI setup
 extension UIView {
     func then(_ block: (UIView) -> Void) -> Self {
         block(self)
