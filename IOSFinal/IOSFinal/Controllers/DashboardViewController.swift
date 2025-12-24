@@ -23,8 +23,20 @@ class DashboardViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // Настройка кнопки после появления экрана окончательно решает проблемы с констрейнтами в навигаторе
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Категории", style: .plain, target: self, action: #selector(self.didTapCategories))
+    }
+    
+    @objc private func didTapCategories() {
+        let alert = UIAlertController(title: "Новая категория", message: "Введите название расхода", preferredStyle: .alert)
+        alert.addTextField { $0.placeholder = "Название (Напр: Еда)" }
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Создать", style: .default) { _ in
+            if let name = alert.textFields?.first?.text, !name.isEmpty {
+                _ = PersistenceManager.shared.createCategory(name: name, iconName: "tag", hexColor: "#FF9500", type: "Expense")
+            }
+        })
+        present(alert, animated: true)
     }
     
     private func setupUI() {
@@ -97,8 +109,8 @@ class DashboardViewController: UIViewController {
     }
     
     private func updateSummary() {
-        let totalIncome = transactions.filter { $0.category?.type.lowercased() == "income" }.reduce(0) { $0 + $1.amount }
-        let totalExpense = transactions.filter { $0.category?.type.lowercased() == "expense" }.reduce(0) { $0 + $1.amount }
+        let totalIncome = transactions.filter { $0.type.lowercased() == "income" }.reduce(0) { $0 + $1.amount }
+        let totalExpense = transactions.filter { $0.type.lowercased() == "expense" }.reduce(0) { $0 + $1.amount }
         let balance = totalIncome - totalExpense
         
         balanceLabel.text = "Общий баланс: \(Int(balance)) ₸"

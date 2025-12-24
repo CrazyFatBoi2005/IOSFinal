@@ -49,17 +49,16 @@ class TransactionCell: UITableViewCell {
     }
     
     func configure(with transaction: Transaction) {
-        titleLabel.text = transaction.category?.name ?? "Без категории"
-        amountLabel.text = "\(transaction.amount) ₸"
+        let isIncome = transaction.type.lowercased() == "income"
+        
+        amountLabel.text = "\(isIncome ? "+" : "-")\(Int(transaction.amount)) ₸"
+        amountLabel.textColor = isIncome ? .systemGreen : .systemRed
+        
+        titleLabel.text = transaction.category?.name ?? (isIncome ? "Доход" : "Расход")
+        categoryIcon.text = isIncome ? "💰" : "💸"
         
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         dateLabel.text = formatter.string(from: transaction.date)
-        
-        if transaction.category?.type.lowercased() == "expense" {
-            amountLabel.textColor = .systemRed
-        } else {
-            amountLabel.textColor = .systemGreen
-        }
     }
 }

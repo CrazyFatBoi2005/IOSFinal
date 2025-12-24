@@ -7,10 +7,7 @@ class PersistenceManager {
     
     private init() {}
     func createCategory(name: String, iconName: String, hexColor: String, type: String) -> Category {
-        guard let entity = NSEntityDescription.entity(forEntityName: "Category", in: context) else {
-            fatalError("Failed to find Category entity")
-        }
-        let category = Category(entity: entity, insertInto: context)
+        let category = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
         category.id = UUID()
         category.name = name
         category.iconName = iconName
@@ -43,16 +40,14 @@ class PersistenceManager {
         }
     }
     
-    func createTransaction(amount: Double, date: Date, note: String?, category: Category) {
-        guard let entity = NSEntityDescription.entity(forEntityName: "Transaction", in: context) else {
-            fatalError("Failed to find Transaction entity")
-        }
-        let transaction = Transaction(entity: entity, insertInto: context)
+    func createTransaction(amount: Double, date: Date, note: String?, category: Category?, type: String) {
+        let transaction = NSEntityDescription.insertNewObject(forEntityName: "Transaction", into: context) as! Transaction
         transaction.id = UUID()
         transaction.amount = amount
         transaction.date = date
         transaction.note = note
         transaction.category = category
+        transaction.type = type
         save()
     }
     

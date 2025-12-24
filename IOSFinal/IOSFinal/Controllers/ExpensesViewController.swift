@@ -20,19 +20,6 @@ class ExpensesViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.bullet.plus"), style: .plain, target: self, action: #selector(self.didTapAddCategory))
-    }
-    
-    @objc private func didTapAddCategory() {
-        let alert = UIAlertController(title: "Новая категория", message: "Введите название", preferredStyle: .alert)
-        alert.addTextField { $0.placeholder = "Название" }
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Создать", style: .default) { _ in
-            if let name = alert.textFields?.first?.text, !name.isEmpty {
-                _ = PersistenceManager.shared.createCategory(name: name, iconName: "tag", hexColor: "#007AFF", type: "Expense")
-            }
-        })
-        present(alert, animated: true)
     }
     
     private func setupUI() {
@@ -55,7 +42,7 @@ class ExpensesViewController: UIViewController {
     
     private func loadData() {
         let allTransactions = PersistenceManager.shared.fetchTransactions(for: 0, year: 0)
-        expenses = allTransactions.filter { $0.category?.type == "Expense" }.sorted { ($0.date ?? Date()) > ($1.date ?? Date()) }
+        expenses = allTransactions.filter { $0.type == "Expense" }.sorted { ($0.date ?? Date()) > ($1.date ?? Date()) }
         tableView.reloadData()
     }
     

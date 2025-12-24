@@ -47,13 +47,17 @@ class AddTransactionViewController: UIViewController {
         noteField.placeholder = "Комментарий (необязательно)"
         noteField.borderStyle = .roundedRect
         
-        categoryPicker.dataSource = self
-        categoryPicker.delegate = self
-        
         stack.addArrangedSubview(UILabel().then { $0.text = "Сумма:" })
         stack.addArrangedSubview(amountField)
-        stack.addArrangedSubview(UILabel().then { $0.text = "Категория:" })
-        stack.addArrangedSubview(categoryPicker)
+        
+        if transactionType == "Expense" {
+            categoryPicker.dataSource = self
+            categoryPicker.delegate = self
+            stack.addArrangedSubview(UILabel().then { $0.text = "Категория:" })
+            stack.addArrangedSubview(categoryPicker)
+        }
+        
+        stack.addArrangedSubview(UILabel().then { $0.text = "Комментарий:" })
         stack.addArrangedSubview(noteField)
         
         NSLayoutConstraint.activate([
@@ -69,13 +73,18 @@ class AddTransactionViewController: UIViewController {
     
     @objc private func didTapSave() {
         guard let amountText = amountField.text, let amount = Double(amountText) else { return }
-        let category = categories[categoryPicker.selectedRow(inComponent: 0)]
+        
+        var category: Category? = nil
+        if transactionType == "Expense" && !categories.isEmpty {
+            category = categories[categoryPicker.selectedRow(inComponent: 0)]
+        }
         
         PersistenceManager.shared.createTransaction(
             amount: amount,
             date: Date(), // Всегда сегодня
             note: noteField.text,
-            category: category
+            category: category,
+            type: transactionType
         )
         
         dismiss(animated: true)
