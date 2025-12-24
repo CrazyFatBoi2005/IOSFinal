@@ -56,42 +56,54 @@ class DashboardViewController: UIViewController {
         summaryHeaderView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(summaryHeaderView)
         summaryHeaderView.backgroundColor = .secondarySystemBackground
+        summaryHeaderView.layer.cornerRadius = 16
+        summaryHeaderView.clipsToBounds = true
         
         balanceLabel.text = "Баланс: 0 ₸"
         balanceLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        balanceLabel.textAlignment = .center
         
         incomeLabel.text = "Доход: 0 ₸"
         incomeLabel.textColor = .systemGreen
+        incomeLabel.font = .systemFont(ofSize: 16, weight: .medium)
         
         expenseLabel.text = "Расход: 0 ₸"
         expenseLabel.textColor = .systemRed
+        expenseLabel.font = .systemFont(ofSize: 16, weight: .medium)
         
-        let stack = UIStackView(arrangedSubviews: [balanceLabel, incomeLabel, expenseLabel])
-        stack.axis = .vertical
-        stack.spacing = 4
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        summaryHeaderView.addSubview(stack)
+        let statsStack = UIStackView(arrangedSubviews: [incomeLabel, expenseLabel])
+        statsStack.axis = .horizontal
+        statsStack.distribution = .fillEqually
+        statsStack.spacing = 20
+        
+        let mainStack = UIStackView(arrangedSubviews: [balanceLabel, statsStack])
+        mainStack.axis = .vertical
+        mainStack.spacing = 12
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
+        summaryHeaderView.addSubview(mainStack)
         
         NSLayoutConstraint.activate([
-            stack.centerXAnchor.constraint(equalTo: summaryHeaderView.centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: summaryHeaderView.centerYAnchor)
+            mainStack.centerXAnchor.constraint(equalTo: summaryHeaderView.centerXAnchor),
+            mainStack.centerYAnchor.constraint(equalTo: summaryHeaderView.centerYAnchor),
+            mainStack.leadingAnchor.constraint(equalTo: summaryHeaderView.leadingAnchor, constant: 16),
+            mainStack.trailingAnchor.constraint(equalTo: summaryHeaderView.trailingAnchor, constant: -16)
         ])
     }
     
     private func loadData() {
-        transactions = PersistenceManager.shared.fetchTransactions(for: 0, year: 0).sorted { $0.date ?? Date() > $1.date ?? Date() }
+        transactions = PersistenceManager.shared.fetchTransactions(for: 0, year: 0).sorted { ($0.date ?? Date()) > ($1.date ?? Date()) }
         updateSummary()
         tableView.reloadData()
     }
     
     private func updateSummary() {
-        let totalIncome = transactions.filter { $0.category?.type == "Income" }.reduce(0) { $0 + $1.amount }
-        let totalExpense = transactions.filter { $0.category?.type == "Expense" }.reduce(0) { $0 + $1.amount }
+        let totalIncome = transactions.filter { $0.category?.type?.lowercased() == "income" }.reduce(0) { $0 + $1.amount }
+        let totalExpense = transactions.filter { $0.category?.type?.lowercased() == "expense" }.reduce(0) { $0 + $1.amount }
         let balance = totalIncome - totalExpense
         
-        balanceLabel.text = "Баланс: \(Int(balance)) ₸"
-        incomeLabel.text = "Доход: \(Int(totalIncome)) ₸"
-        expenseLabel.text = "Расход: \(Int(totalExpense)) ₸"
+        balanceLabel.text = "Общий баланс: \(Int(balance)) ₸"
+        incomeLabel.text = "↑ Доход: \(Int(totalIncome)) ₸"
+        expenseLabel.text = "↓ Расход: \(Int(totalExpense)) ₸"
     }
     
     @objc private func didTapAdd() {
